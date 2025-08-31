@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter Developer Roadmap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(120deg, #4f46e5, #7c3aed);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .progress-container {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            border-radius: 6px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            font-weight: 500;
+            color: #4f46e5;
+        }
+
+        .roadmap-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .category {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: #4f46e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            flex: 1;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            color: #4f46e5;
+            transition: transform 0.3s ease;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        .todo-list {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .todo-list.expanded {
+            max-height: 2000px;
+        }
+
+        .todo-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-checkbox {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #cbd5e0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .todo-checkbox.checked {
+            background: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .todo-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+        }
+
+        .todo-text {
+            flex: 1;
+        }
+
+        .todo-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .todo-desc {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .companies-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2d3748;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 2px;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .company-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover {
+            background: #4f46e5;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .company-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: #4f46e5;
+        }
+
+        .company-card:hover .company-icon {
+            color: white;
+        }
+
+        .company-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .learning-order {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            counter-reset: step-counter;
+        }
+
+        .order-step {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .order-step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            width: 30px;
+            height: 30px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .companies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .companies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .category-icon {
+                margin-right: 0;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fab fa-flutter"></i>
+            </div>
+            <h1>Senior Flutter Developer Roadmap</h1>
+            <p class="subtitle">A comprehensive guide with detailed to-do lists to track your progress toward becoming a Senior Flutter Engineer</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <h2 class="progress-title">Your Progress</h2>
+                <span class="progress-text" id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="roadmap-container">
+            <div class="category">
+                <div class="category-header" data-category="core">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h2 class="category-title">Core Foundations</h2>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <ul class="todo-list" id="core-list">
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="dart-syntax"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn Dart syntax</div>
+                            <div class="todo-desc">Variables, types, functions, classes, enums, generics</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="dart-oop"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Master OOP concepts</div>
+                            <div class="todo-desc">Inheritance, abstract classes, mixins, interfaces</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="dart-async"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Understand async programming</div>
+                            <div class="todo-desc">Futures & async/await, Streams, Isolates</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="dart-practice"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Practice with DartPad</div>
+                            <div class="todo-desc">Build a small CLI tool in Dart</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-widgets"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn widget tree concept</div>
+                            <div class="todo-desc">Stateless vs Stateful widgets</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-layout"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Practice with layout widgets</div>
+                            <div class="todo-desc">Column, Row, Stack, Flex, Expanded</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-responsive"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build responsive UIs</div>
+                            <div class="todo-desc">MediaQuery, LayoutBuilder</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-navigation"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn navigation</div>
+                            <div class="todo-desc">Navigator 1.0 & 2.0, go_router, auto_route</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-lifecycle"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Understand widget lifecycle</div>
+                            <div class="todo-desc">initState, didUpdateWidget, dispose</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-animations"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build animations</div>
+                            <div class="todo-desc">Implicit and explicit animations, Hero animations</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="flutter-clone"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Create a UI clone</div>
+                            <div class="todo-desc">Build a functional clone of an existing app (e.g., Instagram)</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-management"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn state management</div>
+                            <div class="todo-desc">Start with setState → Provider → Bloc/Riverpod</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-todo"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build a Todo App with Provider</div>
+                            <div class="todo-desc">Implement a todo app using Provider for state management</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-riverpod"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Rebuild with Riverpod</div>
+                            <div class="todo-desc">Reimplement the same app using Riverpod</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-bloc"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Rebuild with Bloc</div>
+                            <div class="todo-desc">Reimplement the same app using Bloc</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-tradeoffs"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Understand tradeoffs</div>
+                            <div class="todo-desc">Compare performance, complexity, scalability of different approaches</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="state-oss"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Contribute to open-source</div>
+                            <div class="todo-desc">Contribute to a package using Bloc/Riverpod</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="category">
+                <div class="category-header" data-category="backend">
+                    <div class="category-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h2 class="category-title">Backend & Data</h2>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <ul class="todo-list" id="backend-list">
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-http"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Practice with http package</div>
+                            <div class="todo-desc">GET, POST, PUT, DELETE requests</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-error"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Error handling</div>
+                            <div class="todo-desc">Try/catch and Either pattern</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-dio"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn Retrofit/Dio</div>
+                            <div class="todo-desc">For more advanced networking</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-auth"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Implement OAuth2/JWT</div>
+                            <div class="todo-desc">Authentication flow implementation</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-websockets"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Use WebSockets</div>
+                            <div class="todo-desc">Real-time chat implementation</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-news"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build a news app</div>
+                            <div class="todo-desc">With a public REST API</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="api-graphql"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Extend with GraphQL</div>
+                            <div class="todo-desc">Integrate with GitHub API or similar</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-sqflite"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Use sqflite</div>
+                            <div class="todo-desc">Store structured local data</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-hive"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Use Hive/Isar</div>
+                            <div class="todo-desc">NoSQL-like storage</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-preferences"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Implement SharedPreferences</div>
+                            <div class="todo-desc">For small key-value storage</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-offline"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build offline-first app</div>
+                            <div class="todo-desc">Store locally, sync with Firebase</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-firestore"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn Firebase Firestore</div>
+                            <div class="todo-desc">Queries, indexes, pagination</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="storage-alternatives"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Try backend alternatives</div>
+                            <div class="todo-desc">Supabase or Hasura</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="category">
+                <div class="category-header" data-category="testing">
+                    <div class="category-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h2 class="category-title">Testing & Optimization</h2>
+                    <div class="expand-icon">▼</div>
+                </div>
+                <ul class="todo-list" id="testing-list">
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="test-unit"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Write unit tests</div>
+                            <div class="todo-desc">For pure Dart functions</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="test-widget"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Write widget tests</div>
+                            <div class="todo-desc">Using pumpWidget</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="test-integration"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Write integration tests</div>
+                            <div class="todo-desc">Simulate user flows</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="test-golden"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn golden tests</div>
+                            <div class="todo-desc">UI snapshot testing</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="test-coverage"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Add tests to projects</div>
+                            <div class="todo-desc">Target 60-70% coverage</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="debug-devtools"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Learn Flutter DevTools</div>
+                            <div class="todo-desc">Widget inspector, performance profiler</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="debug-async"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Debug async issues</div>
+                            <div class="todo-desc">Using breakpoints</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="debug-crashlytics"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Integrate Crashlytics/Sentry</div>
+                            <div class="todo-desc">For crash reporting</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="debug-network"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Simulate poor network</div>
+                            <div class="todo-desc">Optimize API retries</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="perf-rebuilds"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Profile widget rebuilds</div>
+                            <div class="todo-desc">Using debugPrintRebuildDirtyWidgets</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="perf-listview"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Optimize ListView</div>
+                            <div class="todo-desc">ListView.builder, CachedNetworkImage</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="perf-const"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Use const constructors</div>
+                            <div class="todo-desc">Where possible</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="perf-animations"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Test and fix jank</div>
+                            <div class="todo-desc">In animations</div>
+                        </div>
+                    </li>
+                    <li class="todo-item">
+                        <div class="todo-checkbox" data-id="perf-heavy"></div>
+                        <div class="todo-text">
+                            <div class="todo-title">Build performance-heavy app</div>
+                            <div class="todo-desc">Infinite scroll, image gallery</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Additional categories would go here -->
+        </div>
+
+        <div class="learning-order">
+            <h2 class="section-title">Suggested Learning Order</h2>
+            <div class="order-steps">
+                <div class="order-step">Dart & Flutter Basics → Widgets → Layout → Navigation</div>
+                <div class="order-step">State Management → Provider → Bloc/Riverpod</div>
+                <div class="order-step">APIs + Local Storage → REST + Firebase + Offline-first app</div>
+                <div class="order-step">Testing + Performance → Unit tests → DevTools</div>
+                <div class="order-step">Deployment + CI/CD → Publish apps, automate pipelines</div>
+                <div class="order-step">Native + Architecture → Plugins, Clean Architecture</div>
+                <div class="order-step">Scaling & Security → Secure storage, background sync</div>
+                <div class="order-step">Portfolio → Real apps + OSS + blogs</div>
+            </div>
+        </div>
+
+        <div class="companies-section">
+            <h2 class="section-title">Big Tech Companies That Hire Flutter Engineers</h2>
+            <div class="companies-grid">
+                <div class="company-card">
+                    <div class="company-icon"><i class="fab fa-google"></i></div>
+                    <div class="company-name">Google</div>
+                </div>
+                <div class="company-card">
+                    <div class="company-icon"><i class="fab fa-amazon"></i></div>
+                    <div class="company-name">Amazon</div>
+                </div>
+                <div class="company-card">
+                    <div class="company-icon"><i class="fab fa-microsoft"></i></div>
+                    <div class="company-name">Microsoft</div>
+                </div>
+                <div class="company-card">
+                    <div class="company-icon"><i class="fab fa-meta"></i></div>
+                    <div class="company-name">Meta (Facebook)</div>
+                </div>
+                <div class="company-card">
+                    <div class="company-icon"><i class="fas fa-car"></i></div>
+                    <div class="company-name">Toyota</div>
+                </div>
+                <div class="company-card">
+                    <div class="company-icon"><i class="fab fa-uber"></i></div>
+                    <div class="company-name">Uber</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Senior Flutter Developer Roadmap © 2023. Track your progress and become a Flutter expert!</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize checkboxes from localStorage
+            const checkboxes = document.querySelectorAll('.todo-checkbox');
+            const totalItems = checkboxes.length;
+            let completedItems = 0;
+            
+            checkboxes.forEach(checkbox => {
+                const id = checkbox.getAttribute('data-id');
+                const isChecked = localStorage.getItem(id) === 'true';
+                
+                if (isChecked) {
+                    checkbox.classList.add('checked');
+                    completedItems++;
+                }
+                
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    const isNowChecked = this.classList.contains('checked');
+                    localStorage.setItem(id, isNowChecked);
+                    
+                    // Update progress
+                    completedItems += isNowChecked ? 1 : -1;
+                    updateProgress();
+                });
+            });
+            
+            // Update progress bar
+            function updateProgress() {
+                const percent = Math.round((completedItems / totalItems) * 100);
+                document.getElementById('progress-fill').style.width = percent + '%';
+                document.getElementById('progress-percent').textContent = percent + '%';
+            }
+            
+            updateProgress();
+            
+            // Expand/collapse categories
+            const categoryHeaders = document.querySelectorAll('.category-header');
+            
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const list = document.getElementById(`${category}-list`);
+                    const icon = this.querySelector('.expand-icon');
+                    
+                    list.classList.toggle('expanded');
+                    icon.classList.toggle('expanded');
+                });
+            });
+            
+            // Add animation for elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe all categories and cards
+            document.querySelectorAll('.category, .company-card, .order-step').forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
