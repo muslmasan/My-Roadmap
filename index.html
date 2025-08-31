@@ -96,6 +96,43 @@
             color: #4f46e5;
         }
 
+        .save-options {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
         .roadmap-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -319,6 +356,68 @@
             flex-shrink: 0;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal-textarea {
+            width: 100%;
+            height: 200px;
+            padding: 16px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
         footer {
             text-align: center;
             padding: 30px 0;
@@ -337,6 +436,10 @@
             
             .companies-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .save-options {
+                flex-direction: column;
             }
         }
 
@@ -374,6 +477,18 @@
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            
+            <div class="save-options">
+                <button class="btn btn-primary" id="export-btn">
+                    <i class="fas fa-file-export"></i> Export Progress
+                </button>
+                <button class="btn btn-secondary" id="import-btn">
+                    <i class="fas fa-file-import"></i> Import Progress
+                </button>
+                <button class="btn btn-secondary" id="reset-btn">
+                    <i class="fas fa-trash"></i> Reset Progress
+                </button>
             </div>
         </div>
 
@@ -774,6 +889,57 @@
         </footer>
     </div>
 
+    <!-- Export/Import Modal -->
+    <div class="modal" id="export-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Export Progress</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy the code below to save your progress. You can import it later on any browser.</p>
+                <textarea class="modal-textarea" id="export-data" readonly></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-export">Close</button>
+                <button class="btn btn-primary" id="copy-export">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="import-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Import Progress</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Paste your progress code below to import your saved progress.</p>
+                <textarea class="modal-textarea" id="import-data" placeholder="Paste your progress code here..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-import">Cancel</button>
+                <button class="btn btn-primary" id="apply-import">Import Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="reset-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Reset Progress</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to reset all your progress? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-reset">Cancel</button>
+                <button class="btn btn-primary" id="confirm-reset">Reset Progress</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize checkboxes from localStorage
@@ -781,25 +947,30 @@
             const totalItems = checkboxes.length;
             let completedItems = 0;
             
-            checkboxes.forEach(checkbox => {
-                const id = checkbox.getAttribute('data-id');
-                const isChecked = localStorage.getItem(id) === 'true';
-                
-                if (isChecked) {
-                    checkbox.classList.add('checked');
-                    completedItems++;
-                }
-                
-                checkbox.addEventListener('click', function() {
-                    this.classList.toggle('checked');
-                    const isNowChecked = this.classList.contains('checked');
-                    localStorage.setItem(id, isNowChecked);
+            // Load progress from localStorage
+            function loadProgress() {
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    const isChecked = localStorage.getItem(id) === 'true';
                     
-                    // Update progress
-                    completedItems += isNowChecked ? 1 : -1;
-                    updateProgress();
+                    if (isChecked) {
+                        checkbox.classList.add('checked');
+                        completedItems++;
+                    }
+                    
+                    checkbox.addEventListener('click', function() {
+                        this.classList.toggle('checked');
+                        const isNowChecked = this.classList.contains('checked');
+                        localStorage.setItem(id, isNowChecked);
+                        
+                        // Update progress
+                        completedItems += isNowChecked ? 1 : -1;
+                        updateProgress();
+                    });
                 });
-            });
+                
+                updateProgress();
+            }
             
             // Update progress bar
             function updateProgress() {
@@ -808,7 +979,68 @@
                 document.getElementById('progress-percent').textContent = percent + '%';
             }
             
-            updateProgress();
+            // Export progress
+            function exportProgress() {
+                const progressData = {};
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    progressData[id] = checkbox.classList.contains('checked');
+                });
+                
+                const exportString = JSON.stringify(progressData);
+                document.getElementById('export-data').value = exportString;
+                document.getElementById('export-modal').style.display = 'flex';
+            }
+            
+            // Import progress
+            function importProgress() {
+                const importString = document.getElementById('import-data').value;
+                
+                try {
+                    const progressData = JSON.parse(importString);
+                    
+                    // Reset completed items count
+                    completedItems = 0;
+                    
+                    // Apply imported progress
+                    checkboxes.forEach(checkbox => {
+                        const id = checkbox.getAttribute('data-id');
+                        if (progressData.hasOwnProperty(id)) {
+                            const isChecked = progressData[id];
+                            if (isChecked) {
+                                checkbox.classList.add('checked');
+                                completedItems++;
+                            } else {
+                                checkbox.classList.remove('checked');
+                            }
+                            localStorage.setItem(id, isChecked);
+                        }
+                    });
+                    
+                    updateProgress();
+                    alert('Progress imported successfully!');
+                    document.getElementById('import-modal').style.display = 'none';
+                } catch (error) {
+                    alert('Invalid progress data. Please check your import code.');
+                }
+            }
+            
+            // Reset progress
+            function resetProgress() {
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    checkbox.classList.remove('checked');
+                    localStorage.setItem(id, false);
+                });
+                
+                completedItems = 0;
+                updateProgress();
+                document.getElementById('reset-modal').style.display = 'none';
+                alert('Progress has been reset.');
+            }
+            
+            // Initialize the app
+            loadProgress();
             
             // Expand/collapse categories
             const categoryHeaders = document.querySelectorAll('.category-header');
@@ -821,6 +1053,34 @@
                     
                     list.classList.toggle('expanded');
                     icon.classList.toggle('expanded');
+                });
+            });
+            
+            // Set up event listeners for buttons
+            document.getElementById('export-btn').addEventListener('click', exportProgress);
+            document.getElementById('import-btn').addEventListener('click', function() {
+                document.getElementById('import-modal').style.display = 'flex';
+            });
+            document.getElementById('reset-btn').addEventListener('click', function() {
+                document.getElementById('reset-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('copy-export').addEventListener('click', function() {
+                const exportData = document.getElementById('export-data');
+                exportData.select();
+                document.execCommand('copy');
+                alert('Progress code copied to clipboard!');
+            });
+            
+            document.getElementById('apply-import').addEventListener('click', importProgress);
+            document.getElementById('confirm-reset').addEventListener('click', resetProgress);
+            
+            // Close modals
+            document.querySelectorAll('.close-modal, #close-export, #close-import, #cancel-reset').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
                 });
             });
             
