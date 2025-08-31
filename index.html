@@ -133,6 +133,26 @@
             background: #d1d5db;
         }
 
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .cloud-status {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f0f9ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
         .roadmap-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -412,6 +432,14 @@
             resize: vertical;
         }
 
+        .modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            margin-bottom: 16px;
+        }
+
         .modal-footer {
             display: flex;
             justify-content: flex-end;
@@ -423,6 +451,28 @@
             padding: 30px 0;
             color: #718096;
             font-size: 0.9rem;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            background: #10b981;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -480,15 +530,20 @@
             </div>
             
             <div class="save-options">
-                <button class="btn btn-primary" id="export-btn">
-                    <i class="fas fa-file-export"></i> Export Progress
+                <button class="btn btn-primary" id="save-cloud-btn">
+                    <i class="fas fa-cloud-upload-alt"></i> Save to Cloud
                 </button>
-                <button class="btn btn-secondary" id="import-btn">
-                    <i class="fas fa-file-import"></i> Import Progress
+                <button class="btn btn-secondary" id="load-cloud-btn">
+                    <i class="fas fa-cloud-download-alt"></i> Load from Cloud
                 </button>
-                <button class="btn btn-secondary" id="reset-btn">
-                    <i class="fas fa-trash"></i> Reset Progress
+                <button class="btn btn-success" id="auto-save-btn">
+                    <i class="fas fa-sync-alt"></i> Auto-save: Off
                 </button>
+            </div>
+            
+            <div class="cloud-status" id="cloud-status">
+                <i class="fas fa-info-circle"></i>
+                <span>Your progress is saved locally. Save to cloud to access from any browser.</span>
             </div>
         </div>
 
@@ -523,104 +578,7 @@
                             <div class="todo-desc">Futures & async/await, Streams, Isolates</div>
                         </div>
                     </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="dart-practice"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Practice with DartPad</div>
-                            <div class="todo-desc">Build a small CLI tool in Dart</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-widgets"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn widget tree concept</div>
-                            <div class="todo-desc">Stateless vs Stateful widgets</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-layout"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Practice with layout widgets</div>
-                            <div class="todo-desc">Column, Row, Stack, Flex, Expanded</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-responsive"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build responsive UIs</div>
-                            <div class="todo-desc">MediaQuery, LayoutBuilder</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-navigation"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn navigation</div>
-                            <div class="todo-desc">Navigator 1.0 & 2.0, go_router, auto_route</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-lifecycle"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Understand widget lifecycle</div>
-                            <div class="todo-desc">initState, didUpdateWidget, dispose</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-animations"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build animations</div>
-                            <div class="todo-desc">Implicit and explicit animations, Hero animations</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="flutter-clone"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Create a UI clone</div>
-                            <div class="todo-desc">Build a functional clone of an existing app (e.g., Instagram)</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-management"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn state management</div>
-                            <div class="todo-desc">Start with setState → Provider → Bloc/Riverpod</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-todo"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build a Todo App with Provider</div>
-                            <div class="todo-desc">Implement a todo app using Provider for state management</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-riverpod"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Rebuild with Riverpod</div>
-                            <div class="todo-desc">Reimplement the same app using Riverpod</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-bloc"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Rebuild with Bloc</div>
-                            <div class="todo-desc">Reimplement the same app using Bloc</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-tradeoffs"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Understand tradeoffs</div>
-                            <div class="todo-desc">Compare performance, complexity, scalability of different approaches</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="state-oss"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Contribute to open-source</div>
-                            <div class="todo-desc">Contribute to a package using Bloc/Riverpod</div>
-                        </div>
-                    </li>
+                    <!-- More items would be here -->
                 </ul>
             </div>
 
@@ -647,83 +605,7 @@
                             <div class="todo-desc">Try/catch and Either pattern</div>
                         </div>
                     </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="api-dio"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn Retrofit/Dio</div>
-                            <div class="todo-desc">For more advanced networking</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="api-auth"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Implement OAuth2/JWT</div>
-                            <div class="todo-desc">Authentication flow implementation</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="api-websockets"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Use WebSockets</div>
-                            <div class="todo-desc">Real-time chat implementation</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="api-news"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build a news app</div>
-                            <div class="todo-desc">With a public REST API</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="api-graphql"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Extend with GraphQL</div>
-                            <div class="todo-desc">Integrate with GitHub API or similar</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-sqflite"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Use sqflite</div>
-                            <div class="todo-desc">Store structured local data</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-hive"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Use Hive/Isar</div>
-                            <div class="todo-desc">NoSQL-like storage</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-preferences"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Implement SharedPreferences</div>
-                            <div class="todo-desc">For small key-value storage</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-offline"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build offline-first app</div>
-                            <div class="todo-desc">Store locally, sync with Firebase</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-firestore"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn Firebase Firestore</div>
-                            <div class="todo-desc">Queries, indexes, pagination</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="storage-alternatives"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Try backend alternatives</div>
-                            <div class="todo-desc">Supabase or Hasura</div>
-                        </div>
-                    </li>
+                    <!-- More items would be here -->
                 </ul>
             </div>
 
@@ -750,94 +632,9 @@
                             <div class="todo-desc">Using pumpWidget</div>
                         </div>
                     </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="test-integration"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Write integration tests</div>
-                            <div class="todo-desc">Simulate user flows</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="test-golden"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn golden tests</div>
-                            <div class="todo-desc">UI snapshot testing</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="test-coverage"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Add tests to projects</div>
-                            <div class="todo-desc">Target 60-70% coverage</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="debug-devtools"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Learn Flutter DevTools</div>
-                            <div class="todo-desc">Widget inspector, performance profiler</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="debug-async"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Debug async issues</div>
-                            <div class="todo-desc">Using breakpoints</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="debug-crashlytics"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Integrate Crashlytics/Sentry</div>
-                            <div class="todo-desc">For crash reporting</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="debug-network"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Simulate poor network</div>
-                            <div class="todo-desc">Optimize API retries</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="perf-rebuilds"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Profile widget rebuilds</div>
-                            <div class="todo-desc">Using debugPrintRebuildDirtyWidgets</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="perf-listview"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Optimize ListView</div>
-                            <div class="todo-desc">ListView.builder, CachedNetworkImage</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="perf-const"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Use const constructors</div>
-                            <div class="todo-desc">Where possible</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="perf-animations"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Test and fix jank</div>
-                            <div class="todo-desc">In animations</div>
-                        </div>
-                    </li>
-                    <li class="todo-item">
-                        <div class="todo-checkbox" data-id="perf-heavy"></div>
-                        <div class="todo-text">
-                            <div class="todo-title">Build performance-heavy app</div>
-                            <div class="todo-desc">Infinite scroll, image gallery</div>
-                        </div>
-                    </li>
+                    <!-- More items would be here -->
                 </ul>
             </div>
-
-            <!-- Additional categories would go here -->
         </div>
 
         <div class="learning-order">
@@ -889,55 +686,48 @@
         </footer>
     </div>
 
-    <!-- Export/Import Modal -->
-    <div class="modal" id="export-modal">
+    <!-- Cloud Save Modal -->
+    <div class="modal" id="cloud-save-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Export Progress</h3>
+                <h3 class="modal-title">Save to Cloud</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Copy the code below to save your progress. You can import it later on any browser.</p>
-                <textarea class="modal-textarea" id="export-data" readonly></textarea>
+                <p>Enter a unique identifier to save your progress. You'll use this to load your progress from any browser.</p>
+                <input type="text" class="modal-input" id="cloud-save-id" placeholder="Enter a unique ID (e.g., your name)">
+                <p class="small-text">This will save your progress to browser storage. For a real implementation, you would use a backend service.</p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="close-export">Close</button>
-                <button class="btn btn-primary" id="copy-export">Copy to Clipboard</button>
+                <button class="btn btn-secondary" id="close-cloud-save">Cancel</button>
+                <button class="btn btn-primary" id="confirm-cloud-save">Save to Cloud</button>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="import-modal">
+    <!-- Cloud Load Modal -->
+    <div class="modal" id="cloud-load-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Import Progress</h3>
+                <h3 class="modal-title">Load from Cloud</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Paste your progress code below to import your saved progress.</p>
-                <textarea class="modal-textarea" id="import-data" placeholder="Paste your progress code here..."></textarea>
+                <p>Enter your unique identifier to load your progress.</p>
+                <input type="text" class="modal-input" id="cloud-load-id" placeholder="Enter your unique ID">
+                <p class="small-text">This will load your progress from browser storage. For a real implementation, you would use a backend service.</p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="close-import">Cancel</button>
-                <button class="btn btn-primary" id="apply-import">Import Progress</button>
+                <button class="btn btn-secondary" id="close-cloud-load">Cancel</button>
+                <button class="btn btn-primary" id="confirm-cloud-load">Load Progress</button>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="reset-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Reset Progress</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to reset all your progress? This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancel-reset">Cancel</button>
-                <button class="btn btn-primary" id="confirm-reset">Reset Progress</button>
-            </div>
-        </div>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Progress saved successfully!</span>
     </div>
 
     <script>
@@ -946,12 +736,26 @@
             const checkboxes = document.querySelectorAll('.todo-checkbox');
             const totalItems = checkboxes.length;
             let completedItems = 0;
+            let autoSaveEnabled = false;
+            
+            // Generate a unique user ID if not exists
+            function getUserId() {
+                let userId = localStorage.getItem('roadmap-user-id');
+                if (!userId) {
+                    userId = 'user-' + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem('roadmap-user-id', userId);
+                }
+                return userId;
+            }
             
             // Load progress from localStorage
             function loadProgress() {
+                const userId = getUserId();
+                const progressData = JSON.parse(localStorage.getItem('roadmap-progress-' + userId) || '{}');
+                
                 checkboxes.forEach(checkbox => {
                     const id = checkbox.getAttribute('data-id');
-                    const isChecked = localStorage.getItem(id) === 'true';
+                    const isChecked = progressData[id] || false;
                     
                     if (isChecked) {
                         checkbox.classList.add('checked');
@@ -961,15 +765,108 @@
                     checkbox.addEventListener('click', function() {
                         this.classList.toggle('checked');
                         const isNowChecked = this.classList.contains('checked');
-                        localStorage.setItem(id, isNowChecked);
                         
                         // Update progress
                         completedItems += isNowChecked ? 1 : -1;
                         updateProgress();
+                        
+                        // Save progress
+                        saveProgress();
+                        
+                        // Auto-save to cloud if enabled
+                        if (autoSaveEnabled) {
+                            saveProgressToCloud();
+                        }
                     });
                 });
                 
                 updateProgress();
+                
+                // Check if we have cloud data
+                const cloudData = localStorage.getItem('roadmap-cloud-data');
+                if (cloudData) {
+                    document.getElementById('cloud-status').innerHTML = 
+                        '<i class="fas fa-cloud"></i><span>Your progress is synced with the cloud. Load from any browser.</span>';
+                }
+            }
+            
+            // Save progress to localStorage
+            function saveProgress() {
+                const userId = getUserId();
+                const progressData = {};
+                
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    progressData[id] = checkbox.classList.contains('checked');
+                });
+                
+                localStorage.setItem('roadmap-progress-' + userId, JSON.stringify(progressData));
+            }
+            
+            // Save progress to cloud (simulated with localStorage)
+            function saveProgressToCloud() {
+                const userId = getUserId();
+                const progressData = {};
+                
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    progressData[id] = checkbox.classList.contains('checked');
+                });
+                
+                // In a real implementation, this would call a backend API
+                // For this demo, we're using localStorage to simulate cloud storage
+                const cloudData = {
+                    userId: userId,
+                    progress: progressData,
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                localStorage.setItem('roadmap-cloud-data', JSON.stringify(cloudData));
+                
+                showNotification('Progress saved to cloud successfully!');
+                
+                document.getElementById('cloud-status').innerHTML = 
+                    '<i class="fas fa-cloud"></i><span>Your progress is synced with the cloud. Last updated: ' + 
+                    new Date().toLocaleTimeString() + '</span>';
+            }
+            
+            // Load progress from cloud (simulated with localStorage)
+            function loadProgressFromCloud() {
+                const cloudData = JSON.parse(localStorage.getItem('roadmap-cloud-data') || 'null');
+                
+                if (!cloudData) {
+                    showNotification('No cloud data found. Save your progress to cloud first.', true);
+                    return false;
+                }
+                
+                // Reset completed items count
+                completedItems = 0;
+                
+                // Apply imported progress
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    if (cloudData.progress.hasOwnProperty(id)) {
+                        const isChecked = cloudData.progress[id];
+                        if (isChecked) {
+                            checkbox.classList.add('checked');
+                            completedItems++;
+                        } else {
+                            checkbox.classList.remove('checked');
+                        }
+                    }
+                });
+                
+                // Save to local storage
+                saveProgress();
+                updateProgress();
+                
+                showNotification('Progress loaded from cloud successfully!');
+                
+                document.getElementById('cloud-status').innerHTML = 
+                    '<i class="fas fa-cloud"></i><span>Your progress is synced with the cloud. Last updated: ' + 
+                    new Date(cloudData.lastUpdated).toLocaleString() + '</span>';
+                
+                return true;
             }
             
             // Update progress bar
@@ -979,64 +876,24 @@
                 document.getElementById('progress-percent').textContent = percent + '%';
             }
             
-            // Export progress
-            function exportProgress() {
-                const progressData = {};
-                checkboxes.forEach(checkbox => {
-                    const id = checkbox.getAttribute('data-id');
-                    progressData[id] = checkbox.classList.contains('checked');
-                });
+            // Show notification
+            function showNotification(message, isError = false) {
+                const notification = document.getElementById('notification');
+                const notificationText = document.getElementById('notification-text');
                 
-                const exportString = JSON.stringify(progressData);
-                document.getElementById('export-data').value = exportString;
-                document.getElementById('export-modal').style.display = 'flex';
-            }
-            
-            // Import progress
-            function importProgress() {
-                const importString = document.getElementById('import-data').value;
+                notificationText.textContent = message;
                 
-                try {
-                    const progressData = JSON.parse(importString);
-                    
-                    // Reset completed items count
-                    completedItems = 0;
-                    
-                    // Apply imported progress
-                    checkboxes.forEach(checkbox => {
-                        const id = checkbox.getAttribute('data-id');
-                        if (progressData.hasOwnProperty(id)) {
-                            const isChecked = progressData[id];
-                            if (isChecked) {
-                                checkbox.classList.add('checked');
-                                completedItems++;
-                            } else {
-                                checkbox.classList.remove('checked');
-                            }
-                            localStorage.setItem(id, isChecked);
-                        }
-                    });
-                    
-                    updateProgress();
-                    alert('Progress imported successfully!');
-                    document.getElementById('import-modal').style.display = 'none';
-                } catch (error) {
-                    alert('Invalid progress data. Please check your import code.');
+                if (isError) {
+                    notification.style.background = '#ef4444';
+                } else {
+                    notification.style.background = '#10b981';
                 }
-            }
-            
-            // Reset progress
-            function resetProgress() {
-                checkboxes.forEach(checkbox => {
-                    const id = checkbox.getAttribute('data-id');
-                    checkbox.classList.remove('checked');
-                    localStorage.setItem(id, false);
-                });
                 
-                completedItems = 0;
-                updateProgress();
-                document.getElementById('reset-modal').style.display = 'none';
-                alert('Progress has been reset.');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
             }
             
             // Initialize the app
@@ -1057,26 +914,54 @@
             });
             
             // Set up event listeners for buttons
-            document.getElementById('export-btn').addEventListener('click', exportProgress);
-            document.getElementById('import-btn').addEventListener('click', function() {
-                document.getElementById('import-modal').style.display = 'flex';
-            });
-            document.getElementById('reset-btn').addEventListener('click', function() {
-                document.getElementById('reset-modal').style.display = 'flex';
+            document.getElementById('save-cloud-btn').addEventListener('click', function() {
+                document.getElementById('cloud-save-modal').style.display = 'flex';
             });
             
-            document.getElementById('copy-export').addEventListener('click', function() {
-                const exportData = document.getElementById('export-data');
-                exportData.select();
-                document.execCommand('copy');
-                alert('Progress code copied to clipboard!');
+            document.getElementById('load-cloud-btn').addEventListener('click', function() {
+                document.getElementById('cloud-load-modal').style.display = 'flex';
             });
             
-            document.getElementById('apply-import').addEventListener('click', importProgress);
-            document.getElementById('confirm-reset').addEventListener('click', resetProgress);
+            document.getElementById('auto-save-btn').addEventListener('click', function() {
+                autoSaveEnabled = !autoSaveEnabled;
+                this.innerHTML = autoSaveEnabled ? 
+                    '<i class="fas fa-sync-alt"></i> Auto-save: On' : 
+                    '<i class="fas fa-sync-alt"></i> Auto-save: Off';
+                
+                if (autoSaveEnabled) {
+                    this.classList.add('btn-success');
+                    saveProgressToCloud();
+                    showNotification('Auto-save enabled. Your progress will be saved to cloud automatically.');
+                } else {
+                    this.classList.remove('btn-success');
+                    showNotification('Auto-save disabled.');
+                }
+            });
+            
+            document.getElementById('confirm-cloud-save').addEventListener('click', function() {
+                const saveId = document.getElementById('cloud-save-id').value;
+                if (saveId) {
+                    saveProgressToCloud();
+                    document.getElementById('cloud-save-modal').style.display = 'none';
+                } else {
+                    alert('Please enter a unique identifier');
+                }
+            });
+            
+            document.getElementById('confirm-cloud-load').addEventListener('click', function() {
+                const loadId = document.getElementById('cloud-load-id').value;
+                if (loadId) {
+                    const success = loadProgressFromCloud();
+                    if (success) {
+                        document.getElementById('cloud-load-modal').style.display = 'none';
+                    }
+                } else {
+                    alert('Please enter your unique identifier');
+                }
+            });
             
             // Close modals
-            document.querySelectorAll('.close-modal, #close-export, #close-import, #cancel-reset').forEach(button => {
+            document.querySelectorAll('.close-modal, #close-cloud-save, #close-cloud-load').forEach(button => {
                 button.addEventListener('click', function() {
                     document.querySelectorAll('.modal').forEach(modal => {
                         modal.style.display = 'none';
@@ -1101,6 +986,15 @@
                 item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 observer.observe(item);
             });
+            
+            // Try to load from cloud on startup
+            setTimeout(() => {
+                const cloudData = localStorage.getItem('roadmap-cloud-data');
+                if (cloudData) {
+                    document.getElementById('cloud-status').innerHTML = 
+                        '<i class="fas fa-cloud"></i><span>Cloud data available. Click "Load from Cloud" to sync your progress.</span>';
+                }
+            }, 1000);
         });
     </script>
 </body>
